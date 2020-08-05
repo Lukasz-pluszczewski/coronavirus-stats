@@ -5,11 +5,21 @@ import PieChart from './PieChart';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 
-const Charts = ({ currentlySick, dailyCases, sortedConfirmedData, sortedDeathsData, sortedRecoveredData, deaths, recovered }) => {
+const Charts = ({
+  currentlySick,
+  dailyCases,
+  sortedConfirmedData,
+  sortedDeathsData,
+  sortedRecoveredData,
+  deaths,
+  recovered,
+  selectedCountryPopulation,
+}) => {
+  console.log('currentlySick', currentlySick, selectedCountryPopulation);
   return (
     <>
       {
-        currentlySick && deaths && recovered ?
+        selectedCountryPopulation && currentlySick && deaths && recovered ?
           <div>
             <PieChart
               labels={['Currently sick', 'Deaths', 'Recovered']}
@@ -87,9 +97,13 @@ const Charts = ({ currentlySick, dailyCases, sortedConfirmedData, sortedDeathsDa
   );
 };
 
-const mapStateToProps = ({ selectedCountry: { deaths, recovered } }) => ({
+const mapStateToProps = ({
+  selectedCountry: { deaths, recovered },
+  countryPopulation: { selectedCountryPopulation },
+}) => ({
   deaths,
-  recovered
+  recovered,
+  selectedCountryPopulation,
 });
 
 export default connect(mapStateToProps)(Charts);

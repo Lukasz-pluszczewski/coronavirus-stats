@@ -14,6 +14,8 @@ const CountryInfoCards = (props) => {
         <Card
           cardNumber={props.selectedCountryConfirmed.latest}
           cardText='Total cases'
+          smallText={calculatePercentage(props.selectedCountryPopulation, props.selectedCountryConfirmed.latest, 3)}
+          addSmallTextPercent
         />
         <div className='arrow-separator'></div>
         <Card
@@ -31,6 +33,8 @@ const CountryInfoCards = (props) => {
           cardText='Deaths'
           totalNumber={props.selectedCountryConfirmed.latest}
           percentageDescription={true}
+          smallText={calculatePercentage(props.selectedCountryPopulation, props.selectedCountryDeaths.latest, 3)}
+          addSmallTextPercent
         />
         <div className='arrow-separator'></div>
         <Card
@@ -47,6 +51,8 @@ const CountryInfoCards = (props) => {
           cardText='Recovered'
           totalNumber={props.selectedCountryConfirmed.latest}
           percentageDescription={true}
+          smallText={calculatePercentage(props.selectedCountryPopulation, props.selectedCountryRecovered.latest, 3)}
+          addSmallTextPercent
         />
         <div className='arrow-separator'></div>
         <Card
@@ -63,6 +69,8 @@ const CountryInfoCards = (props) => {
           cardText='Currently sick'
           totalNumber={props.selectedCountryConfirmed.latest}
           percentageDescription={true}
+          smallText={calculatePercentage(props.selectedCountryPopulation, props.currentlySick, 3)}
+          addSmallTextPercent
         />
       </div>
       <div className='country-cards'>
@@ -77,6 +85,7 @@ const CountryInfoCards = (props) => {
           cardNumber={calculatePercentage(props.selectedCountryPopulation, props.selectedCountryConfirmed.latest, 3)}
           cardText='population infected'
           smallText='(all cases)'
+          addPercentSign
         />
       </div>
     </div>

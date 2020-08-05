@@ -9,7 +9,7 @@ import {
 import { roundNumber } from '../../../common';
 
 const Country = ({ data, country, ...props }) => {
-  
+
   const handleSelectCountry = (selectedCountry) => () => {
     props.selectedCountryDispatchToStore(data, selectedCountry);
     props.getSelectedCountryPopulation(selectedCountry.country_code);
@@ -22,6 +22,8 @@ const Country = ({ data, country, ...props }) => {
       });
     }
   };
+
+  console.log('Country country', country);
 
   return (
     <div

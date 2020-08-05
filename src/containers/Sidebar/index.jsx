@@ -32,9 +32,18 @@ const Sidebar = ({ countryConfirmedDataSum }) => {
   );
 };
 
-const mapStateToProps = ({ apiData: { countryConfirmedDataSum } }) => {
+const mapStateToProps = (state) => {
+  const { apiData: {
+    countryConfirmedDataSum,
+    countryDeathsDataSum,
+    countryRecoveredDataSum,
+  } } = state;
+  console.log('state', state);
   return {
-    countryConfirmedDataSum
+    countryConfirmedDataSum,
+    countryDeathsDataSum,
+    countryRecoveredDataSum,
+    state,
   };
 };
 

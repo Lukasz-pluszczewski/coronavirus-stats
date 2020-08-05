@@ -34,7 +34,7 @@ export const sortDataByDate = (categoryData) => {
 };
 
 export const roundNumber = (number) => {
-  if (number !== undefined && number !== null) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  if (number !== undefined && number !== null) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };
 
 export const calculatePercentage = (totalValue, partialValue, toFixed = 2) => {
