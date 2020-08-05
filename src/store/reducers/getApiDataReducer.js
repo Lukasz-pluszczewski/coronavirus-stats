@@ -18,7 +18,9 @@ const getApiDataReducer = (state = { loading: true }, action) => {
         lastUpdated: action.data[0].confirmed.last_updated,
         countryConfirmedDataSum: action.data[1][0].countryConfirmedDataSum,
         countryDeathsDataSum: action.data[1][0].countryDeathsDataSum,
-        countryRecoveredDataSum: action.data[1][0].countryRecoveredDataSum
+        countryRecoveredDataSum: action.data[1][0].countryRecoveredDataSum,
+        countryActiveDataSum: action.data[1][0].countryActiveDataSum,
+        populationData: action.data[2],
       };
     case GET_API_DATA_ERROR:
       return {

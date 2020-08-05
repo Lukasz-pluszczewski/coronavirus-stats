@@ -41,10 +41,20 @@
         float: right;
       }
     }
-  
+
     .numbers {
-      color: $red-color;
-      font-weight: bold;
+      display: flex;
+      align-items: baseline;
+
+      .population-percentage {
+        color: #b6b6b6;
+        padding-right: 0.5em;
+        font-size: 0.8em;
+      }
+      .total-number {
+        color: $red-color;
+        font-weight: bold;
+      }
     }
   }
 }

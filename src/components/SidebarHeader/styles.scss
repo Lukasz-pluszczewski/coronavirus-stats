@@ -5,6 +5,7 @@
   display: flex;
 
   .card {
+    cursor: pointer;
     flex: 1;
     color: $gray-color;
     text-align: center;
@@ -15,18 +16,17 @@
     padding: 10px;
     border: 2px solid $light-black;
     border-radius: 50px;
-  
+
     span {
       display: block;
       color: #fff;
       font-size: 24px;
       font-weight: 600;
     }
+
   }
 
-  .card:hover {
-    cursor: pointer;
-
+  .card:hover, .card.card-active {
     &.confirmed {
       border: 2px solid $red-color;
       span {

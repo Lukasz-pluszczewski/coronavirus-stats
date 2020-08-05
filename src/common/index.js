@@ -33,8 +33,10 @@ export const sortDataByDate = (categoryData) => {
   return [categoryData, sortedDates, sortedNumbers];
 };
 
-export const roundNumber = (number) => {
-  if (number !== undefined && number !== null) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+export const roundNumber = (number, decimal = 0) => {
+  if (number !== undefined && number !== null) {
+    return parseFloat(number).toFixed(decimal).replace(/\B(?=(\d{3})+(?!\d))/g, decimal ? '' : ' ');
+  }
 };
 
 export const calculatePercentage = (totalValue, partialValue, toFixed = 2) => {

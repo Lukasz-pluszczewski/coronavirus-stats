@@ -8,7 +8,7 @@ import {
 } from '../../../store/actions';
 import { roundNumber } from '../../../common';
 
-const Country = ({ data, country, ...props }) => {
+const Country = ({ data, country, populationData, ...props }) => {
 
   const handleSelectCountry = (selectedCountry) => () => {
     props.selectedCountryDispatchToStore(data, selectedCountry);
@@ -23,7 +23,8 @@ const Country = ({ data, country, ...props }) => {
     }
   };
 
-  console.log('Country country', country);
+  const totalNumber = roundNumber(country.latest);
+  const populationPercentage = roundNumber(country.latest / populationData[country.country_code], 5);
 
   return (
     <div
@@ -37,14 +38,18 @@ const Country = ({ data, country, ...props }) => {
       />
       <p>
         <strong>{country.country}</strong>
-        <span className='numbers'>{roundNumber(country.latest)}</span>
+        <span className='numbers'>
+          <span className="population-percentage">{populationPercentage}</span>
+          <span className="total-number">{totalNumber}</span>
+        </span>
       </p>
     </div>
   );
 };
 
-const mapStateToProps = ({ apiData: { data }}) => ({
-  data
+const mapStateToProps = ({ apiData: { data, populationData }}) => ({
+  data,
+  populationData,
 });
 
 const mapDispatchToProps = dispatch => ({

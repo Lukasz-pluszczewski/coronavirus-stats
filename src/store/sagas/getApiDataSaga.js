@@ -3,7 +3,7 @@ import { GET_API_DATA_REQUEST, GET_API_DATA_SUCCESS, GET_API_DATA_ERROR } from '
 
 function getSumData(res, propertyName) {
   const data = res[propertyName].locations;
-  
+
   const combineDataSum = data.reduce((countries, province) => {
     const existing = countries.find(country => country.country === province.country);
 
@@ -16,10 +16,10 @@ function getSumData(res, propertyName) {
     } else {
       countries.push(province);
     }
-    
+
     return countries;
   }, []);
-  
+
   const sortCombinedData = combineDataSum.sort((a, b) => parseFloat(b.latest) - parseFloat(a.latest));
 
   return sortCombinedData;
@@ -28,19 +28,37 @@ function getSumData(res, propertyName) {
 function* getApiData() {
   try {
     const data = yield fetch('https://coronavirus-tracker-api.herokuapp.com/all')
-      .then(res => res.json())
-      .then(res => {
-        const countryConfirmedDataSum = getSumData(res, 'confirmed');
-        const countryDeathsDataSum = getSumData(res, 'deaths');
-        const countryRecoveredDataSum = getSumData(res, 'recovered');
+      .then(allDataRes => fetch('https://coronavirus-tracker-api.herokuapp.com/v2/locations').then(async locationsRes => ({
+        all: await allDataRes.json(),
+        locations: await locationsRes.json(),
+      })))
+      .then(({ all, locations }) => {
+        const countryConfirmedDataSum = getSumData(all, 'confirmed');
+        const countryDeathsDataSum = getSumData(all, 'deaths');
+        const countryRecoveredDataSum = getSumData(all, 'recovered');
+
+        const recoveredMap = countryRecoveredDataSum.reduce((recoveredMap, country) => {
+          recoveredMap[country.country_code] = country;
+          return recoveredMap;
+        }, {});
 
         const sumData = [{
           countryConfirmedDataSum,
           countryDeathsDataSum,
-          countryRecoveredDataSum
+          countryRecoveredDataSum,
+          countryActiveDataSum: countryConfirmedDataSum.map(country => ({
+            ...country,
+            latest: country.latest - recoveredMap[country.country_code].latest,
+          })),
         }];
 
-        return [res, sumData];
+        const populationData = locations.locations.reduce((populationData, country) => {
+          populationData[country.country_code] = country.country_population;
+          return populationData;
+        }, {});
+        console.log('res', countryRecoveredDataSum);
+
+        return [all, sumData, populationData];
       })
       .catch(e => console.log(e));
 
